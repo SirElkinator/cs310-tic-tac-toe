@@ -22,13 +22,14 @@ public class TicTacToeView {
         }
         gameBoard = gameBoard.concat("\n\n");
         for (int i=0; i < model.getWidth(); i++){
-            gameBoard = gameBoard.concat(i + " ");
+            gameBoard = gameBoard + i;
+            gameBoard = gameBoard.concat(" ");
             for (int j =0; j < model.getWidth(); j++){
                 gameBoard = gameBoard + model.getMark(i,j).toString();
             }
             gameBoard = gameBoard.concat("\n");
         }  
-        gameBoard = gameBoard.concat("\n\n");
+        
         System.out.println(gameBoard);
     }
 

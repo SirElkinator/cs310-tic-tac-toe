@@ -1,5 +1,7 @@
 package edu.jsu.mcis;
 
+import sun.tools.jar.resources.jar_es;
+
 public class TicTacToeModel {
     
     private static final int DEFAULT_WIDTH = 3;
@@ -90,26 +92,31 @@ public class TicTacToeModel {
         /* Place the current player's mark in the square at the specified
            location, but only if the location is valid and if the square is
            empty! */
-           
-        if ((isSquareMarked(row,col) == false) && (isValidSquare(row,col) == true)){
+        if (isValidSquare(row,col) == false){
+            return false;
+        }
+        else if (isSquareMarked(row,col) == true){
+            return false;
+        }
+        else{
             if (isXTurn() == true){
                 grid[row][col] = Mark.X;
+                xTurn = false;
             }
-            else{
+            else if (isXTurn() == false){
                 grid[row][col] = Mark.O;
+                xTurn = true;
             }
             return true;
         }
-        else{
-            return false;
-        }
+        
     }
 	
     private boolean isValidSquare(int row, int col) {
         
         /* Return true if specified location is within grid bounds */
         
-        if ((row < width) && (col < width)){
+        if ((-1 < row) && (row < width) && (-1 < col) && (col < width)){ 
             return true;
         }
 
@@ -145,12 +152,12 @@ public class TicTacToeModel {
            tie, or if the game is not over, and return the corresponding Result
            value */
         
-        if ((isXTurn() == true) && (isMarkWin(Mark.X) == true)){
-                return Result.X;
+        if ((isMarkWin(Mark.X) == true)){
+            return Result.X;
         }
         
         else if (isMarkWin(Mark.O) == true){
-                return Result.O;
+            return Result.O;
         }
 
         else if (isTie() == true){
@@ -168,11 +175,75 @@ public class TicTacToeModel {
         /* Check the squares of the board to see if the specified mark is the
            winner */
         
-        /* INSERT YOUR CODE HERE */
+           int vertical = 0;
+           int horizontal = 0;
+           int downDiagonal = 0;
+           int upDiagonal = 0;
+       
+        //check horizontal
+        if (horizontal != width){
+            for (int i=0; i < width; i++){
+                horizontal = 0;
+                for (int j=0; j < width; j++){
+                    if(grid[i][j] == mark){
+                        horizontal = horizontal + 1;
+                    }
+                }
+            }
+        }
+
+        //check vertical
+        if (vertical != width){
+            for (int j=0; j < width; j++){
+                vertical = 0;
+                for (int i=0; i < width; i++){
+                    if(grid[i][j] == mark){
+                        vertical = vertical + 1;
+                    }
+                }
+            }
+        }
+
+        //check down and right
+        /*if (downDiagonal != width){
+            for (int j = 0; j <width;j++){
+                downDiagonal = 0;
+                for (int i=0;i<width;i++){
+                    if(grid[i][j] == mark){
+                        downDiagonal = downDiagonal + 1;
+                    }
+                }
+            }
+        }*/
+
+        //check up and right
+        /*if (upDiagonal != width){
+            for (int j = 0; j <width;j++){
+                upDiagonal = 0;
+                for (int i=0;i<width;i++){
+                    if(grid[i][j] == mark){
+                        upDiagonal = upDiagonal + 1;
+                    }
+                }
+            }
+        }*/
         
-
-        return false; /* remove this line! */
-
+        //if the number that matched is a full line
+        if (vertical == width){
+            return true;
+        }
+        else if (horizontal == width){
+            return true;
+        }
+        else if (downDiagonal == width){
+            return true;
+        }
+        else if (upDiagonal == width){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 	
     private boolean isTie() {
