@@ -3,7 +3,7 @@ package edu.jsu.mcis;
 public class TicTacToeView {
 
     private TicTacToeModel model;
-    
+    public String gameBoard;
     /* CONSTRUCTOR */
 	
     public TicTacToeView(TicTacToeModel model) {
@@ -15,24 +15,42 @@ public class TicTacToeView {
     public void viewModel() {
         
         /* Print the board to the console (see examples) */
-        
-        /* INSERT YOUR CODE HERE */
-
+        gameBoard = new String("");
+        gameBoard = gameBoard.concat("\n\n  ");
+        for (int k=0; k < model.getWidth(); k++){
+            gameBoard = gameBoard + k;
+        }
+        gameBoard = gameBoard.concat("\n\n");
+        for (int i=0; i < model.getWidth(); i++){
+            gameBoard = gameBoard.concat(i + " ");
+            for (int j =0; j < model.getWidth(); j++){
+                gameBoard = gameBoard + model.getMark(i,j).toString();
+            }
+            gameBoard = gameBoard.concat("\n");
+        }  
+        gameBoard = gameBoard.concat("\n\n");
+        System.out.println(gameBoard);
     }
 
     public void showNextMovePrompt() {
 
-        /* Display a prompt for the player's next move (see examples) */
+        // Display a prompt for the player's next move (see examples) */
 
-        /* INSERT YOUR CODE HERE */
-
+        if (model.isXTurn() == true){
+            System.out.println("Player 1 (X) Move: ");
+            System.out.println("Enter the row and column numbers, separated by a space: ");
+        }
+        else{
+            System.out.println("Player 2 (0) Move: ");
+            System.out.println("Enter the row and column numbers, separated by a space: ");
+        }
     }
 
     public void showInputError() {
 
         /* Display an error if input is invalid (see examples) */
 
-        /* INSERT YOUR CODE HERE */
+        System.out.println("This input is invalid: ");
 
     }
 
