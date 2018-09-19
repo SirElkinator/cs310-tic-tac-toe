@@ -51,7 +51,7 @@ public class TicTacToeView {
 
         /* Display an error if input is invalid (see examples) */
 
-        System.out.println("This input is invalid: ");
+        System.out.println("This input is invalid. (Please try again): ");
 
     }
 

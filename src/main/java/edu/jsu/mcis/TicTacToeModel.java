@@ -180,9 +180,10 @@ public class TicTacToeModel {
            int downDiagonal = 0;
            int upDiagonal = 0;
        
-        //check horizontal
-        if (horizontal != width){
-            for (int i=0; i < width; i++){
+        //check rows
+        
+        for (int i=0; i < width; i++){
+            if (horizontal != width){
                 horizontal = 0;
                 for (int j=0; j < width; j++){
                     if(grid[i][j] == mark){
@@ -192,9 +193,10 @@ public class TicTacToeModel {
             }
         }
 
-        //check vertical
-        if (vertical != width){
-            for (int j=0; j < width; j++){
+        //check columns
+        
+        for (int j=0; j < width; j++){
+            if (vertical != width){
                 vertical = 0;
                 for (int i=0; i < width; i++){
                     if(grid[i][j] == mark){
@@ -205,30 +207,23 @@ public class TicTacToeModel {
         }
 
         //check down and right
-        /*if (downDiagonal != width){
-            for (int j = 0; j <width;j++){
-                downDiagonal = 0;
-                for (int i=0;i<width;i++){
-                    if(grid[i][j] == mark){
-                        downDiagonal = downDiagonal + 1;
-                    }
-                }
+      
+        for (int j = 0; j <width;j++){
+            if(grid[j][j] == mark){
+                downDiagonal = downDiagonal + 1;
             }
-        }*/
+        }
 
         //check up and right
-        /*if (upDiagonal != width){
-            for (int j = 0; j <width;j++){
-                upDiagonal = 0;
-                for (int i=0;i<width;i++){
-                    if(grid[i][j] == mark){
-                        upDiagonal = upDiagonal + 1;
-                    }
-                }
+       
+        for (int j = 0; j < width;j++){
+            if(grid[j][width-j-1] == mark){
+                upDiagonal = upDiagonal + 1;
             }
-        }*/
+        }
         
         //if the number that matched is a full line
+        
         if (vertical == width){
             return true;
         }
