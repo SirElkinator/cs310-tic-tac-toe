@@ -1,66 +1,90 @@
 package edu.jsu.mcis;
+ 
+import java.awt. *;
+import java.awt.event. *;
+import javax.swing. *;
+import java.util.Scanner;
 
-public class TicTacToeView {
+public class TicTacToeView extends JPanel implements ActionListener{
 
-    private TicTacToeModel model;
-    public String gameBoard;
-    /* CONSTRUCTOR */
+    TicTacToeModel model;
+
+    private JButton[][] squares;
+    private JLabel resultLabel;
+    private JPanel squaresPanel;
 	
     public TicTacToeView(TicTacToeModel model) {
-        
         this.model = model;
+
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        squares = new JButton[model.getWidth()][model.getWidth()];
+        squaresPanel = new JPanel(new GridLayout(model.getWidth(),model.getWidth()));
         
-    }
-	
-    public void viewModel() {
         
-        /* Print the board to the console (see examples) */
-        gameBoard = new String("");
-        gameBoard = gameBoard.concat("\n\n  ");
-        for (int k=0; k < model.getWidth(); k++){
-            gameBoard = gameBoard + k;
-        }
-        gameBoard = gameBoard.concat("\n\n");
-        for (int i=0; i < model.getWidth(); i++){
-            gameBoard = gameBoard + i;
-            gameBoard = gameBoard.concat(" ");
-            for (int j =0; j < model.getWidth(); j++){
-                gameBoard = gameBoard + model.getMark(i,j).toString();
+        resultLabel = new JLabel();
+        resultLabel.setName("ResultLabel");
+
+            for (int i =0; i < model.getWidth(); i++){
+                for (int j =0; j < model.getWidth(); j++){
+                    squares[i][j] = new JButton();
+                    squares[i][j].setPreferredSize(new Dimension(64, 64));
+                    squares[i][j].addActionListener(this);
+                    squares[i][j].setName("Square" + i + j);
+                    squaresPanel.add(squares[i][j]);
+                    
+                }
             }
-            gameBoard = gameBoard.concat("\n");
-        }  
+        updateSquares();
+        this.add(squaresPanel);
+        this.add(resultLabel);
+        resultLabel.setText("Welcome to Tic-Tac-Toe!");
+
+    }
+    
+    
+    @Override
+    public void actionPerformed(ActionEvent event) { 
         
-        System.out.println(gameBoard);
-    }
+        String name = ((JButton) event.getSource()).getName();
+        int row = Integer.parseInt(String.valueOf(name.charAt(6)));
+        int col = Integer.parseInt(String.valueOf(name.charAt(7)));
 
-    public void showNextMovePrompt() {
-
-        // Display a prompt for the player's next move (see examples) */
-
-        if (model.isXTurn() == true){
-            System.out.println("Player 1 (X) Move: ");
-            System.out.println("Enter the row and column numbers, separated by a space: ");
+        updateSquares();
+        if (model.makeMark(row,col) == true){
+            
         }
-        else{
-            System.out.println("Player 2 (0) Move: ");
-            System.out.println("Enter the row and column numbers, separated by a space: ");
+        updateSquares();
+        if (model.isGameover() == true) {
+            showResult(model.getResult().toString()); 
         }
+
     }
+        
 
-    public void showInputError() {
+    /*public void viewModel() {
+       add(squaresPanel);
+       
+    }*/
 
-        /* Display an error if input is invalid (see examples) */
+    public void updateSquares() {
 
-        System.out.println("This input is invalid. (Please try again): ");
+        /* Loop through all View buttons and (re)set the text of each button
+           to reflect the grid contents (use the Model's "getMark()" method). */
+           
+            for (int i =0; i < model.getWidth(); i++){
+                for (int j =0; j < model.getWidth(); j++){
+                    squares[i][j].setText(model.getMark(i,j).toString());
+                }
+            }
 
     }
 
     public void showResult(String r) {
 
-        /* Display final winner */
-
-        System.out.println(r + "!");
-
+        // Display final winner
+       
+        resultLabel.setText(r.toUpperCase());
+        
     }
 	
 }
